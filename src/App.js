@@ -27,7 +27,8 @@ class App extends Component {
                 // Because for react the pointer this.state still points to the same object in memory
                 // And it won't know that it has changed. So it does not compare values it just checks if it's the same
                 // reference to the object in memory
-                // To update correctly use setState. It can take an object and will only update the state variables with new values
+                // To update correctly use setState. It can take an object and will create a new object by merging the old object
+                // And the passed object. React will see a new object in memory and will rerender
                 this.setState({message: 'Done!'});
             }}>Update message</button>
           </header>
