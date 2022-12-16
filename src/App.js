@@ -29,7 +29,17 @@ class App extends Component {
                 // reference to the object in memory
                 // To update correctly use setState. It can take an object and will create a new object by merging the old object
                 // And the passed object. React will see a new object in memory and will rerender
-                this.setState({message: 'Done!'});
+                this.setState(
+                    (oldState, props) => {
+                        return {message:'Done!'};
+                    },
+                    () => {
+                        //callback code that will execute after the first function passed to setState is done
+                        // Because keep in mind setState calls will be queued and batched they run asynchronously.
+                        // So writing code directly after setState will be working with the oldState and not the new one
+                        // this is why there is this callback argument in setState
+                        }
+                );
             }}>Update message</button>
           </header>
         </div>
