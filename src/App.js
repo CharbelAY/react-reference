@@ -9,7 +9,8 @@ class App extends Component {
 
         // Object containing local class component state
         this.state = {
-            'message': 'WELCOME'
+            message: 'WELCOME',
+            message2: 'Welcome2'
         }
     }
 
@@ -17,19 +18,18 @@ class App extends Component {
     return (
         <div className="App">
           <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
             <p>
                 {/*Curly braces to execute javascript*/}
                 {this.state.message + ' to react!'}
             </p>
-            <a
-                className="App-link"
-                href="https://reactjs.org"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-              Learn React
-            </a>
+            <button onClick={() => {
+                // this.state.message = 'new message' will not update the DOM
+                // Because for react the pointer this.state still points to the same object in memory
+                // And it won't know that it has changed. So it does not compare values it just checks if it's the same
+                // reference to the object in memory
+                // To update correctly use setState. It can take an object and will only update the state variables with new values
+                this.setState({message: 'Done!'});
+            }}>Update message</button>
           </header>
         </div>
     );
