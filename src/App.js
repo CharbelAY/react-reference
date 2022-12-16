@@ -3,13 +3,24 @@ import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
+
+    constructor(props) {
+        super(props);
+
+        // Object containing local class component state
+        this.state = {
+            'message': 'WELCOME'
+        }
+    }
+
   render() {
     return (
         <div className="App">
           <header className="App-header">
             <img src={logo} className="App-logo" alt="logo" />
             <p>
-              Edit <code>src/App.js</code> and save to reload.
+                {/*Curly braces to execute javascript*/}
+                {this.state.message + ' to react!'}
             </p>
             <a
                 className="App-link"
