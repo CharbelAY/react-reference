@@ -1,16 +1,19 @@
-import {Component} from 'react'
+import React from 'react'
 import logo from './logo.svg';
 import './App.css';
 
-class App extends Component {
+class App extends React.Component {
 
     constructor(props) {
         super(props);
 
         // Object containing local class component state
         this.state = {
-            message: 'WELCOME',
-            message2: 'Welcome2'
+            monsters: [
+                {id: 1, name: 'Linda', rank: 7},
+                {id: 2, name: 'Pablo', rank: 9},
+                {id: 3, name: 'Gustavo', rank: 5}
+            ]
         }
     }
 
@@ -18,29 +21,14 @@ class App extends Component {
     return (
         <div className="App">
           <header className="App-header">
-            <p>
-                {/*Curly braces to execute javascript*/}
-                {this.state.message + ' to react!'}
-            </p>
-            <button onClick={() => {
-                // this.state.message = 'new message' will not update the DOM
-                // Because for react the pointer this.state still points to the same object in memory
-                // And it won't know that it has changed. So it does not compare values it just checks if it's the same
-                // reference to the object in memory
-                // To update correctly use setState. It can take an object and will create a new object by merging the old object
-                // And the passed object. React will see a new object in memory and will rerender
-                this.setState(
-                    (oldState, props) => {
-                        return {message:'Done!'};
-                    },
-                    () => {
-                        //callback code that will execute after the first function passed to setState is done
-                        // Because keep in mind setState calls will be queued and batched they run asynchronously.
-                        // So writing code directly after setState will be working with the oldState and not the new one
-                        // this is why there is this callback argument in setState
-                        }
-                );
-            }}>Update message</button>
+              {
+                  // when looping and rendering items they need to have a unique key to help react identify
+                  // them when manipulating the items
+                  // and changing their properties
+                  this.state.monsters.map(monster =>
+                      <h1 key={monster.id}>{monster.name}</h1>
+                  )
+              }
           </header>
         </div>
     );
