@@ -1,5 +1,4 @@
 import React from 'react'
-import logo from './logo.svg';
 import './App.css';
 
 class App extends React.Component {
@@ -9,15 +8,27 @@ class App extends React.Component {
 
         // Object containing local class component state
         this.state = {
-            monsters: [
-                {id: 1, name: 'Linda', rank: 7},
-                {id: 2, name: 'Pablo', rank: 9},
-                {id: 3, name: 'Gustavo', rank: 5}
-            ]
+            monsters: [],
+            name: 'hey'
         }
     }
 
-  render() {
+    componentDidMount() {
+        fetch("https://jsonplaceholder.typicode.com/users")
+            .then(response => response.json())
+            .then((responseJson) => {
+                const monsters =[];
+                for (let key in responseJson) {
+                    monsters.push({
+                        id: responseJson[key].id,
+                        name: responseJson[key].name
+                    })
+                }
+                this.setState(() => { return {monsters: monsters}}, () => console.log(monsters));
+        })
+        }
+
+    render() {
     return (
         <div className="App">
           <header className="App-header">
@@ -25,9 +36,12 @@ class App extends React.Component {
                   // when looping and rendering items they need to have a unique key to help react identify
                   // them when manipulating the items
                   // and changing their properties
-                  this.state.monsters.map(monster =>
-                      <h1 key={monster.id}>{monster.name}</h1>
-                  )
+                  <>
+                  <h1>{this.state.name}</h1>
+                      {this.state.monsters.map(monster =>
+                          <h1 key={monster.id}>{monster.name}</h1>
+                      )}
+                  </>
               }
           </header>
         </div>
