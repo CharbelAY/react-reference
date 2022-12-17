@@ -1,4 +1,5 @@
 import React from 'react'
+import ItemsListingComponent from "./components/items-listing/items-listing.component";
 import './App.css';
 
 class App extends React.Component {
@@ -38,7 +39,7 @@ class App extends React.Component {
     render() {
 
         const {monsters, searchTerm, placeHolderMessage} = this.state;
-        const {onSearchInput} = this.onSearchInput;
+        const {onSearchInput} = this;
 
         const filteredMonsters = monsters.filter((monster) => {
             return monster.name.toLowerCase().includes(searchTerm);
@@ -54,9 +55,7 @@ class App extends React.Component {
                                 onChange={onSearchInput}
                                 type={"search"}
                             />
-                            {filteredMonsters.map(monster =>
-                                <h1 key={monster.id}>{monster.name}</h1>
-                            )}
+                            <ItemsListingComponent items={filteredMonsters} />
                         </>
                     }
                 </header>
