@@ -31,25 +31,27 @@ class App extends React.Component {
             })
     }
 
+    onSearchInput = (event) => {
+        this.setState({searchTerm: event.target.value.toLowerCase()});
+    }
+
     render() {
 
-        const filteredMonsters = this.state.monsters.filter((monster) => {
-            return monster.name.toLowerCase().includes(this.state.searchTerm);
+        const {monsters, searchTerm, placeHolderMessage} = this.state;
+        const {onSearchInput} = this.onSearchInput;
+
+        const filteredMonsters = monsters.filter((monster) => {
+            return monster.name.toLowerCase().includes(searchTerm);
         });
 
         return (
             <div className="App">
                 <header className="App-header">
                     {
-                        // when looping and rendering items they need to have a unique key to help react identify
-                        // them when manipulating the items
-                        // and changing their properties
                         <>
                             <input
-                                placeholder={this.state.placeHolderMessage}
-                                onChange={(event) => {
-                                    this.setState({searchTerm: event.target.value.toLowerCase()});
-                                }}
+                                placeholder={placeHolderMessage}
+                                onChange={onSearchInput}
                                 type={"search"}
                             />
                             {filteredMonsters.map(monster =>
