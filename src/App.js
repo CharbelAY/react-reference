@@ -9,7 +9,8 @@ class App extends React.Component {
         // Object containing local class component state
         this.state = {
             monsters: [],
-            name: 'hey'
+            searchTerm: '',
+            placeHolderMessage: 'search for a monster...'
         }
     }
 
@@ -26,11 +27,16 @@ class App extends React.Component {
                 }
                 this.setState(() => {
                     return {monsters: monsters}
-                }, () => console.log(monsters));
+                });
             })
     }
 
     render() {
+
+        const filteredMonsters = this.state.monsters.filter((monster) => {
+            return monster.name.toLowerCase().includes(this.state.searchTerm);
+        });
+
         return (
             <div className="App">
                 <header className="App-header">
@@ -39,9 +45,14 @@ class App extends React.Component {
                         // them when manipulating the items
                         // and changing their properties
                         <>
-                            <input/>
-                            <h1>{this.state.name}</h1>
-                            {this.state.monsters.map(monster =>
+                            <input
+                                placeholder={this.state.placeHolderMessage}
+                                onChange={(event) => {
+                                    this.setState({searchTerm: event.target.value.toLowerCase()});
+                                }}
+                                type={"search"}
+                            />
+                            {filteredMonsters.map(monster =>
                                 <h1 key={monster.id}>{monster.name}</h1>
                             )}
                         </>
